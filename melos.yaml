@@ -1,0 +1,100 @@
+name: test_ideas
+repository: https://github.com/your-org/test_ideas
+
+packages:
+  - packages/**
+
+command:
+  bootstrap:
+    runPubGetInParallel: true
+    usePubspecOverrides: true
+
+  version:
+    branch: main
+    linkToCommits: true
+
+  clean:
+    hooks:
+      post: melos exec -- "flutter clean"
+
+scripts:
+  # Analysis
+  analyze:
+    run: melos exec -- flutter analyze
+    description: Run Flutter analyze for all packages
+
+  analyze:design_system:
+    run: melos exec --scope="design_system" -- flutter analyze
+    description: Analyze design_system package
+
+  analyze:app:
+    run: melos exec --scope="app" -- flutter analyze
+    description: Analyze app package
+
+  # Format
+  format:
+    run: melos exec -- dart format . --fix
+    description: Format all packages
+
+  format:check:
+    run: melos exec -- dart format . --set-exit-if-changed
+    description: Check formatting of all packages
+
+  # Clean
+  clean:
+    run: melos exec -- flutter clean
+    description: Clean all packages
+
+  clean:deep:
+    run: |
+      melos clean
+      rm -rf .melos_tool
+      rm -rf **/.dart_tool
+      rm -rf **/pubspec.lock
+    description: Deep clean all packages and melos cache
+
+  # Get dependencies
+  get:
+    run: melos exec -- flutter pub get
+    description: Get dependencies for all packages
+
+  # Run app
+  run:
+    run: melos exec --scope="app" -- flutter run
+    description: Run the app
+
+  run:release:
+    run: melos exec --scope="app" -- flutter run --release
+    description: Run the app in release mode
+
+  # Build
+  build:apk:
+    run: melos exec --scope="app" -- flutter build apk
+    description: Build APK
+
+  build:ios:
+    run: melos exec --scope="app" -- flutter build ios
+    description: Build iOS
+
+  build:web:
+    run: melos exec --scope="app" -- flutter build web
+    description: Build web
+
+  # Test
+  test:
+    run: melos exec -- flutter test
+    description: Run tests for all packages
+
+  test:design_system:
+    run: melos exec --scope="design_system" -- flutter test
+    description: Test design_system package
+
+  # Coverage
+  coverage:
+    run: melos exec -- flutter test --coverage
+    description: Run tests with coverage
+
+  # Version
+  version:
+    run: melos version --no-git-tag-version
+    description: Version packages
