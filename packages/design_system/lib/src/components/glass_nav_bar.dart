@@ -1,6 +1,5 @@
-import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
-
 import '../../common_libs.dart';
+import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 
 typedef NavBarItem = ({IconData icon, String label});
 
@@ -18,34 +17,49 @@ class GlassNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LiquidGlassLayer(
-      child: Box(
-        style: Style(
-          $box.height(80),
-          $box.color.ref(AppColorTokens.paper),
-          $box.shadow.color(Colors.black.withValues(alpha: 0.1)),
-          $box.shadow.offset(0, -2),
-          $box.shadow.blurRadius(10),
-        ),
-        child: SafeArea(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: items.asMap().entries.map((entry) {
-              final index = entry.key;
-              final item = entry.value;
-              final isSelected = index == selectedIndex;
-
-              return Expanded(
-                child: _NavBarItem(
-                  icon: item.icon,
-                  label: item.label,
-                  isSelected: isSelected,
-                  onTap: () => onTap(index),
-                ),
-              );
-            }).toList(),
+    return SizedBox(
+      height: 80,
+      child: Stack(
+        children: [
+          // Background with color
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColorValues.paper,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 10,
+                    offset: const Offset(0, -2),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ),
+
+          // Liquid glass layer for effects
+          LiquidGlassLayer(
+            child: SafeArea(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: items.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final item = entry.value;
+                  final isSelected = index == selectedIndex;
+
+                  return Expanded(
+                    child: _NavBarItem(
+                      icon: item.icon,
+                      label: item.label,
+                      isSelected: isSelected,
+                      onTap: () => onTap(index),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
