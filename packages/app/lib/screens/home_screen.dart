@@ -26,6 +26,43 @@ class HomeScreen extends StatelessWidget {
           $text.style.color.ref(AppColorTokens.slate),
         ),
       ),
+          const SizedBox(height: AppSpacingValues.comfortable),
+          const Divider(),
+          Text(
+            'Liquid Glass Buttons',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: AppColorValues.wine,
+            ),
+          ),
+          const SizedBox(height: AppSpacingValues.cozy),
+
+// Real glass button
+          GlassButtonLiquid(
+            text: 'Wine Glass Button',
+            icon: Icons.auto_awesome_rounded,
+            onPressed: () => debugPrint('Wine glass pressed'),
+          ),
+          const SizedBox(height: AppSpacingValues.compact),
+
+// Fake glass button (better performance)
+          GlassButtonLiquid(
+            text: 'Fake Glass (Fast)',
+            icon: Icons.speed_rounded,
+            variant: GlassButtonVariant.gold,
+            useFakeGlass: true,
+            onPressed: () => debugPrint('Fake glass pressed'),
+          ),
+          const SizedBox(height: AppSpacingValues.compact),
+
+// Ghost variant
+          GlassButtonLiquid(
+            text: 'Ghost Glass',
+            icon: Icons.visibility_outlined,
+            variant: GlassButtonVariant.ghost,
+            onPressed: () => debugPrint('Ghost pressed'),
+          ),
       const SizedBox(height: AppSpacingValues.comfortable),
       GlassCard(
         child: Column(

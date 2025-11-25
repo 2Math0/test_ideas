@@ -7,6 +7,8 @@ export 'package:flutter_riverpod/flutter_riverpod.dart' hide describeIdentity, s
 
 // Design System
 export 'package:design_system/design_system.dart';
+export 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
+
 
 // Screens
 export 'screens/home_screen.dart';

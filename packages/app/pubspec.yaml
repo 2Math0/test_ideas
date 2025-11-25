@@ -13,8 +13,13 @@ dependencies:
     path: ../design_system
   flutter_riverpod: ^2.5.1
   mix: ^1.7.0
+  flutter_hooks: ^0.20.5
+  liquid_glass_renderer: ^0.2.0-dev.4
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
+flutter:
+  uses-material-design: true

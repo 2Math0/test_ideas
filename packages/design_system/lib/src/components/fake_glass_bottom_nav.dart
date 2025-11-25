@@ -1,14 +1,13 @@
 import '../../common_libs.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 
-typedef NavBarItem = ({IconData icon, String label});
 
-class GlassBottomNav extends StatelessWidget {
+class FakeGlassBottomNav extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onTap;
   final List<NavBarItem> items;
 
-  const GlassBottomNav({
+  const FakeGlassBottomNav({
     super.key,
     required this.selectedIndex,
     required this.onTap,
@@ -21,51 +20,46 @@ class GlassBottomNav extends StatelessWidget {
       height: 80,
       child: Stack(
         children: [
-          // 1. Background gradient (required for glass effect)
+          // Background
+          // Positioned.fill(
+          //   child: Container(
+          //     decoration: BoxDecoration(
+          //       gradient: LinearGradient(
+          //         begin: Alignment.topCenter,
+          //         end: Alignment.bottomCenter,
+          //         colors: [
+          //           AppColorValues.wine.withValues(alpha: 0.1),
+          //           AppColorValues.gold.withValues(alpha: 0.05),
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
+
+          // Fake glass (better performance)
           Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    AppColorValues.wine.withValues(alpha: 0.1),
-                    AppColorValues.gold.withValues(alpha: 0.05),
+            child: FakeGlass(
+              shape: const LiquidRoundedRectangle(borderRadius: 0),
+              settings: const LiquidGlassSettings(
+                blur: 10,
+                glassColor: Color(0x44FFFFFF),
+              ),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColorValues.paper.withValues(alpha: 0.6),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.1),
+                      blurRadius: 10,
+                      offset: const Offset(0, -2),
+                    ),
                   ],
                 ),
               ),
             ),
           ),
 
-          // 2. Glass layer
-          Positioned.fill(
-            child: LiquidGlassLayer(
-              settings: const LiquidGlassSettings(
-                thickness: 15,
-                blur: 10,
-                glassColor: Color(0x33FFFFFF),
-                lightIntensity: 1.2,
-                saturation: 1.1,
-              ),
-              child: LiquidGlass(
-                shape: const LiquidRoundedRectangle(borderRadius: 0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColorValues.paper.withValues(alpha: 0.8),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.1),
-                        blurRadius: 10,
-                        offset: const Offset(0, -2),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-          // 3. Content on top
+          // Content
           Positioned.fill(
             child: SafeArea(
               child: Row(

@@ -37,13 +37,28 @@ class MainScaffold extends ConsumerWidget {
 
     return SafeArea(
       child: Scaffold(
-        body: _getPage(selectedIndex),
-        bottomNavigationBar: GlassNavBar(
-          selectedIndex: selectedIndex,
-          onTap: (index) =>
-              ref.read(selectedIndexProvider.notifier).state = index,
-          items: navItems,
+        body: Column(
+          children: [
+            Expanded(child: SingleChildScrollView(child: _getPage(selectedIndex))),
+            FakeGlassBottomNav(
+              selectedIndex: selectedIndex,
+              onTap: (index) =>
+                  ref.read(selectedIndexProvider.notifier).state = index,
+              items: navItems,
+            ),
+          ],
         ),
+        // Choose one:
+        // Real glass (better visuals, more GPU intensive)
+        // bottomNavigationBar: GlassBottomNav(
+        //   selectedIndex: selectedIndex,
+        //   onTap: (index) =>
+        //       ref.read(selectedIndexProvider.notifier).state = index,
+        //   items: navItems,
+        // ),
+
+        // OR use FakeGlass (better performance)
+        // bottomNavigationBar:
       ),
     );
   }
